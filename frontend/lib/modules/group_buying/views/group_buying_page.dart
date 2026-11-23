@@ -45,57 +45,54 @@ class _GroupBuyingPageState extends ConsumerState<GroupBuyingPage>
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: Container(
-          color: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          alignment: Alignment.centerLeft,
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          'Group Buying',
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 8),
-                        const SimulatedBadge(),
-                      ],
+      body: Column(
+        children: [
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: const [
+                    Text(
+                      'Group Buying Deals',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 2),
-                    const Text(
-                      'Tiered bulk buying deals: unlock lower prices as society neighbors pledge units together',
-                      style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
-                    ),
+                    SizedBox(width: 8),
+                    SimulatedBadge(),
                   ],
                 ),
-              ),
-              TabBar(
-                controller: _tabController,
-                isScrollable: true,
-                labelColor: const Color(0xFFD97706),
-                unselectedLabelColor: AppColors.textSecondary,
-                indicatorColor: const Color(0xFFD97706),
-                tabs: const [
-                  Tab(text: 'Active Community Deals'),
-                  Tab(text: 'My Pledges & Door Deliveries'),
-                ],
-              ),
-            ],
+                const SizedBox(height: 2),
+                const Text(
+                  'Tiered bulk buying deals: unlock lower prices as society neighbors pledge units together',
+                  style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                ),
+                const SizedBox(height: 8),
+                TabBar(
+                  controller: _tabController,
+                  isScrollable: true,
+                  labelColor: const Color(0xFFD97706),
+                  unselectedLabelColor: AppColors.textSecondary,
+                  indicatorColor: const Color(0xFFD97706),
+                  tabs: const [
+                    Tab(text: 'Active Community Deals'),
+                    Tab(text: 'My Pledges & Door Deliveries'),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _buildDealsView(isSupplier, isSecurity),
-          _buildOrdersView(),
+          const Divider(height: 1),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _buildDealsView(isSupplier, isSecurity),
+                _buildOrdersView(),
+              ],
+            ),
+          ),
         ],
       ),
     );

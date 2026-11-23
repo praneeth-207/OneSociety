@@ -44,57 +44,54 @@ class _ServiceHubPageState extends ConsumerState<ServiceHubPage>
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: Container(
-          color: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          alignment: Alignment.centerLeft,
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          'Service Hub',
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 8),
-                        const SimulatedBadge(),
-                      ],
+      body: Column(
+        children: [
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: const [
+                    Text(
+                      'Service Hub',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 2),
-                    const Text(
-                      'Dedicated housemaid time slots, verified resident & external professionals',
-                      style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
-                    ),
+                    SizedBox(width: 8),
+                    SimulatedBadge(),
                   ],
                 ),
-              ),
-              TabBar(
-                controller: _tabController,
-                isScrollable: true,
-                labelColor: AppColors.primary,
-                unselectedLabelColor: AppColors.textSecondary,
-                indicatorColor: AppColors.primary,
-                tabs: [
-                  Tab(text: isProvider ? 'Available Services' : 'Browse Services & Maids'),
-                  Tab(text: isProvider ? 'My Assigned Tasks' : 'My Bookings'),
-                ],
-              ),
-            ],
+                const SizedBox(height: 2),
+                const Text(
+                  'Dedicated housemaid time slots, verified resident & external professionals',
+                  style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                ),
+                const SizedBox(height: 8),
+                TabBar(
+                  controller: _tabController,
+                  isScrollable: true,
+                  labelColor: AppColors.primary,
+                  unselectedLabelColor: AppColors.textSecondary,
+                  indicatorColor: AppColors.primary,
+                  tabs: [
+                    Tab(text: isProvider ? 'Available Services' : 'Browse Services & Maids'),
+                    Tab(text: isProvider ? 'My Assigned Tasks' : 'My Bookings'),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _buildBrowseProvidersView(),
-          _buildBookingsView(isProvider),
+          const Divider(height: 1),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _buildBrowseProvidersView(),
+                _buildBookingsView(isProvider),
+              ],
+            ),
+          ),
         ],
       ),
     );

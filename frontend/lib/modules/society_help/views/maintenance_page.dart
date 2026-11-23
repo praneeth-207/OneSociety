@@ -39,47 +39,54 @@ class _MaintenancePageState extends ConsumerState<MaintenancePage> {
         children: [
           // Header Bar
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             color: Colors.white,
-            child: Row(
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 16,
+              runSpacing: 12,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 8,
+                      children: const [
+                        Text(
+                          'Society Maintenance & Finances',
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        SimulatedBadge(),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      isPresident
+                          ? 'Manage society monthly dues, expense ledger, and carry-forward balance sheet'
+                          : 'View and pay your flat maintenance bills with instant receipt verification',
+                      style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
+                    ),
+                  ],
+                ),
+                if (isPresident)
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 8,
                     children: [
-                      Row(
-                        children: [
-                          const Text(
-                            'Society Maintenance & Finances',
-                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(width: 8),
-                          const SimulatedBadge(),
-                        ],
+                      OutlinedButton.icon(
+                        onPressed: () => _showGenerateBillsDialog(context),
+                        icon: const Icon(Icons.receipt_long, size: 18),
+                        label: const Text('Generate Bills (All Flats)'),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        isPresident
-                            ? 'Manage society monthly dues, expense ledger, and carry-forward balance sheet'
-                            : 'View and pay your flat maintenance bills with instant receipt verification',
-                        style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
+                      ElevatedButton.icon(
+                        onPressed: () => _closeMonth(context),
+                        icon: const Icon(Icons.calculate, size: 18),
+                        label: const Text('Close Month & Carry Forward'),
                       ),
                     ],
                   ),
-                ),
-                if (isPresident) ...[
-                  OutlinedButton.icon(
-                    onPressed: () => _showGenerateBillsDialog(context),
-                    icon: const Icon(Icons.receipt_long, size: 18),
-                    label: const Text('Generate Bills (All Flats)'),
-                  ),
-                  const SizedBox(width: 12),
-                  ElevatedButton.icon(
-                    onPressed: () => _closeMonth(context),
-                    icon: const Icon(Icons.calculate, size: 18),
-                    label: const Text('Close Month & Carry Forward'),
-                  ),
-                ],
               ],
             ),
           ),

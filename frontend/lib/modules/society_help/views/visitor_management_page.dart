@@ -48,27 +48,29 @@ class _VisitorManagementPageState extends ConsumerState<VisitorManagementPage>
         children: [
           // Header Bar
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             color: Colors.white,
-            child: Row(
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 16,
+              runSpacing: 12,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        isSecurity ? 'Gate Security & Visitor Verification' : 'Visitor Pass Management',
-                        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        isSecurity
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      isSecurity ? 'Gate Security & Visitor Verification' : 'Visitor Pass Management',
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      isSecurity
                           ? 'Scan visitor QR passes or approve unexpected gate arrivals'
                           : 'Generate pre-planned QR passes for your guests, deliveries, and cabs',
-                        style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
-                      ),
-                    ],
-                  ),
+                      style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
+                    ),
+                  ],
                 ),
                 if (!isSecurity)
                   ElevatedButton.icon(

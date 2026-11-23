@@ -40,57 +40,54 @@ class _ShareRentPageState extends ConsumerState<ShareRentPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: Container(
-          color: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          alignment: Alignment.centerLeft,
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          'Share & Rent',
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 8),
-                        const SimulatedBadge(),
-                      ],
+      body: Column(
+        children: [
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: const [
+                    Text(
+                      'Share & Rent',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 2),
-                    const Text(
-                      'Peer-to-peer item sharing, tools & appliance rentals with escrow deposit security',
-                      style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
-                    ),
+                    SizedBox(width: 8),
+                    SimulatedBadge(),
                   ],
                 ),
-              ),
-              TabBar(
-                controller: _tabController,
-                isScrollable: true,
-                labelColor: AppColors.primary,
-                unselectedLabelColor: AppColors.textSecondary,
-                indicatorColor: AppColors.primary,
-                tabs: const [
-                  Tab(text: 'Community Marketplace'),
-                  Tab(text: 'My Rentals & Escrow Dashboard'),
-                ],
-              ),
-            ],
+                const SizedBox(height: 2),
+                const Text(
+                  'Peer-to-peer item sharing, tools & appliance rentals with escrow deposit security',
+                  style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                ),
+                const SizedBox(height: 8),
+                TabBar(
+                  controller: _tabController,
+                  isScrollable: true,
+                  labelColor: AppColors.primary,
+                  unselectedLabelColor: AppColors.textSecondary,
+                  indicatorColor: AppColors.primary,
+                  tabs: const [
+                    Tab(text: 'Community Marketplace'),
+                    Tab(text: 'My Rentals & Escrow Dashboard'),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _buildMarketplaceView(),
-          _buildRentalsDashboardView(),
+          const Divider(height: 1),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _buildMarketplaceView(),
+                _buildRentalsDashboardView(),
+              ],
+            ),
+          ),
         ],
       ),
     );

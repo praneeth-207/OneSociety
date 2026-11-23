@@ -62,24 +62,29 @@ class _ComplaintsListPageState extends ConsumerState<ComplaintsListPage> with Si
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Top Header
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 16,
+              runSpacing: 12,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
+                  children: const [
+                    Text(
                       'Smart Complaint Handling',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       'Track, assign, resolve and verify common-area society issues.',
                       style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
                     ),
                   ],
                 ),
-                Row(
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 8,
                   children: [
                     if (isPresident)
                       OutlinedButton.icon(
@@ -87,7 +92,6 @@ class _ComplaintsListPageState extends ConsumerState<ComplaintsListPage> with Si
                         label: const Text('Analytics & SLA'),
                         onPressed: () => ComplaintsAnalyticsDialog.show(context),
                       ),
-                    const SizedBox(width: 12),
                     if (isResident || isPresident)
                       ElevatedButton.icon(
                         icon: const Icon(Icons.add),

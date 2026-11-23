@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../auth/auth_provider.dart';
 import '../theme/app_theme.dart';
 import 'app_card.dart';
-import 'status_badge.dart';
 
 class HomeDashboard extends ConsumerWidget {
   const HomeDashboard({super.key});
@@ -15,7 +14,7 @@ class HomeDashboard extends ConsumerWidget {
     final user = authState.user;
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -68,14 +67,14 @@ class HomeDashboard extends ConsumerWidget {
                     color: Colors.white.withAlpha(30),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.verified_user, color: Colors.white, size: 32),
+                  child: const Icon(Icons.verified_user, color: Colors.white, size: 30),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 28),
           const Text(
-            'OneSociety Modules',
+            'Society Services',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -84,7 +83,7 @@ class HomeDashboard extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
 
-          // 5 Module Cards Grid
+          // 5 Feature Cards Grid
           LayoutBuilder(
             builder: (context, constraints) {
               final crossAxisCount = constraints.maxWidth > 1100
@@ -99,52 +98,47 @@ class HomeDashboard extends ConsumerWidget {
                 mainAxisSpacing: 16,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                childAspectRatio: 1.5,
+                childAspectRatio: crossAxisCount == 1 ? 2.0 : 1.45,
                 children: [
-                  _moduleCard(
+                  _serviceCard(
                     context,
                     title: 'Smart Complaints',
-                    subtitle: 'Report common-area issues with AI triage, track status (#C1024), assign providers.',
+                    subtitle: 'Report maintenance issues with automated assignment, status tracking, and resident verification.',
                     icon: Icons.report_problem,
                     color: const Color(0xFFEF4444),
                     route: '/complaints',
-                    badge: 'Module 4',
                   ),
-                  _moduleCard(
+                  _serviceCard(
                     context,
                     title: 'Society Help & Visitors',
-                    subtitle: 'Visitor single-use QR passes, unexpected entry approval, and monthly maintenance bills.',
+                    subtitle: 'Generate guest QR gate passes, unexpected visitor approval, and pay flat maintenance bills.',
                     icon: Icons.shield,
                     color: const Color(0xFF0D9488),
                     route: '/society-help',
-                    badge: 'Module 5',
                   ),
-                  _moduleCard(
+                  _serviceCard(
                     context,
                     title: 'Service Hub',
-                    subtitle: 'Hire verified housemaids with dedicated modules, book tutors, and verify credentials.',
+                    subtitle: 'Book verified housemaids with dedicated daily slots, electricians, tutors, and plumbers.',
                     icon: Icons.handyman,
                     color: const Color(0xFF3B82F6),
                     route: '/service-hub',
-                    badge: 'Module 3',
                   ),
-                  _moduleCard(
+                  _serviceCard(
                     context,
                     title: 'Share & Rent',
-                    subtitle: 'Peer-to-peer item rentals among verified neighbors. Simulated escrow & deposit settlement.',
+                    subtitle: 'Peer-to-peer household item rentals with neighbors, secured by simulated escrow deposits.',
                     icon: Icons.swap_horiz,
                     color: const Color(0xFF8B5CF6),
                     route: '/share-rent',
-                    badge: 'Module 2',
                   ),
-                  _moduleCard(
+                  _serviceCard(
                     context,
-                    title: 'Group Buying',
-                    subtitle: 'Pool society demand for bulk tiered prices. Escrow hold, gate manifest QR verification.',
+                    title: 'Group Buying Deals',
+                    subtitle: 'Pool society bulk demand for volume discounts, truck gate delivery, and price drops.',
                     icon: Icons.shopping_basket,
                     color: const Color(0xFFF59E0B),
                     route: '/group-buying',
-                    badge: 'Module 1',
                   ),
                 ],
               );
@@ -155,14 +149,13 @@ class HomeDashboard extends ConsumerWidget {
     );
   }
 
-  Widget _moduleCard(
+  Widget _serviceCard(
     BuildContext context, {
     required String title,
     required String subtitle,
     required IconData icon,
     required Color color,
     required String route,
-    required String badge,
   }) {
     return AppCard(
       onTap: () => context.go(route),
@@ -170,7 +163,6 @@ class HomeDashboard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
@@ -180,34 +172,37 @@ class HomeDashboard extends ConsumerWidget {
                 ),
                 child: Icon(icon, color: color, size: 24),
               ),
-              StatusBadge(status: badge),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+              ),
             ],
           ),
-          const Spacer(),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            subtitle,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.textSecondary,
-              height: 1.3,
+          const SizedBox(height: 10),
+          Expanded(
+            child: Text(
+              subtitle,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.textSecondary,
+                height: 1.35,
+              ),
             ),
           ),
           const SizedBox(height: 8),
           Row(
             children: [
               Text(
-                'Open Module',
+                'Open',
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,

@@ -13,7 +13,7 @@ void main() {
     await ApiClient.init();
   });
 
-  testWidgets('OneSociety App boots and displays login screen with phone authentication', (WidgetTester tester) async {
+  testWidgets('OneSociety App boots and displays clean role profiles without raw phone numbers', (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1200, 900);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(() => tester.view.resetPhysicalSize());
@@ -26,14 +26,19 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('OneSociety'), findsWidgets);
-    expect(find.text('Sign In'), findsOneWidget);
-    expect(find.text('Phone Number / Mobile'), findsOneWidget);
-    expect(find.text('Quick Demo Login Credentials (Phone / Password):'), findsOneWidget);
-    expect(find.text('President (9876543210)'), findsOneWidget);
-    expect(find.text('Guard - Gate (9876543220)'), findsOneWidget);
+    expect(find.text('Choose Role'), findsOneWidget);
+    expect(find.text('Custom Sign-In'), findsOneWidget);
+
+    // Verify clean roles without raw phone strings
+    expect(find.text('Resident'), findsOneWidget);
+    expect(find.text('Rahul Sharma • Flat A-101'), findsOneWidget);
+    expect(find.text('Society President'), findsOneWidget);
+    expect(find.text('Gate Security Guard'), findsOneWidget);
+    expect(find.text('Service Provider'), findsOneWidget);
+    expect(find.text('Society Supplier'), findsOneWidget);
   });
 
-  testWidgets('Quick demo button populates mobile number field', (WidgetTester tester) async {
+  testWidgets('Custom Sign-In tab displays credentials form', (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1200, 900);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(() => tester.view.resetPhysicalSize());
@@ -45,14 +50,14 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Tap Guard demo button
-    final guardBtn = find.text('Guard - Gate (9876543220)');
-    expect(guardBtn, findsOneWidget);
-    await tester.ensureVisible(guardBtn);
-    await tester.tap(guardBtn);
+    // Tap Custom Sign-In tab
+    final customTab = find.text('Custom Sign-In');
+    expect(customTab, findsOneWidget);
+    await tester.tap(customTab);
     await tester.pumpAndSettle();
 
-    // Verify phone field contains Guard's phone
-    expect(find.text('9876543220'), findsOneWidget);
+    // Verify clean input fields
+    expect(find.text('Mobile Number or Email'), findsOneWidget);
+    expect(find.text('Sign In'), findsOneWidget);
   });
 }
