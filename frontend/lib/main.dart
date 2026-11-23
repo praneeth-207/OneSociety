@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'core/network/api_client.dart';
+import 'core/theme/app_theme.dart';
+import 'core/routing/app_router.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ApiClient.init();
+
+  runApp(
+    const ProviderScope(
+      child: OneSocietyApp(),
+    ),
+  );
+}
+
+class OneSocietyApp extends ConsumerWidget {
+  const OneSocietyApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
+
+    return MaterialApp.router(
+      title: 'OneSociety - One Website for Every Apartment Need',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      routerConfig: router,
+    );
+  }
+}
