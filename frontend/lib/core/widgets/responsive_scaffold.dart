@@ -70,6 +70,7 @@ class ResponsiveScaffold extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               padding: const EdgeInsets.all(6),
@@ -79,12 +80,15 @@ class ResponsiveScaffold extends ConsumerWidget {
               ),
               child: const Icon(Icons.apartment, color: Colors.white, size: 20),
             ),
-            const SizedBox(width: 10),
-            Text(
-              AppStrings.get('app_name', lang),
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                AppStrings.get('app_name', lang),
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
             ),
-            if (user?.flatNumber != null) ...[
+            if (isDesktop && user?.flatNumber != null) ...[
               const SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -108,7 +112,7 @@ class ResponsiveScaffold extends ConsumerWidget {
           // Language selector
           PopupMenuButton<AppLanguage>(
             tooltip: 'Language / भाषा / భాష',
-            icon: const Icon(Icons.language, color: AppColors.textPrimary),
+            icon: const Icon(Icons.language, color: AppColors.textPrimary, size: 22),
             onSelected: (selected) {
               ref.read(languageProvider.notifier).setLanguage(selected);
             },
@@ -128,14 +132,15 @@ class ResponsiveScaffold extends ConsumerWidget {
             ],
           ),
           if (user != null) ...[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Center(
-                child: StatusBadge(status: user.role),
+            if (isDesktop)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Center(
+                  child: StatusBadge(status: user.role),
+                ),
               ),
-            ),
             IconButton(
-              icon: const Icon(Icons.logout, color: AppColors.error),
+              icon: const Icon(Icons.logout, color: AppColors.error, size: 22),
               tooltip: AppStrings.get('logout', lang),
               onPressed: () async {
                 await ref.read(authProvider.notifier).logout();
@@ -145,7 +150,7 @@ class ResponsiveScaffold extends ConsumerWidget {
               },
             ),
           ],
-          const SizedBox(width: 12),
+          const SizedBox(width: 8),
         ],
       ),
       drawer: !isDesktop
