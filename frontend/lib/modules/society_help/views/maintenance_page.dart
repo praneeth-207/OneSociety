@@ -224,46 +224,67 @@ class _MaintenancePageState extends ConsumerState<MaintenancePage> {
               separatorBuilder: (_, __) => const Divider(height: 1),
               itemBuilder: (context, index) {
                 final bill = bills[index];
-                return ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  leading: CircleAvatar(
-                    backgroundColor: AppColors.primary.withAlpha(20),
-                    child: Text(
-                      bill.flatNumber,
-                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary),
-                    ),
-                  ),
-                  title: Text(
-                    'Flat ${bill.flatNumber} • ${bill.residentName ?? "Resident"}',
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  subtitle: Text(
-                    'Due: ${DateFormat('dd MMM yyyy').format(bill.dueDate)} • Method: ${bill.paymentMethod ?? "Unpaid"}',
-                  ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 12,
+                    runSpacing: 10,
                     children: [
-                      Text(
-                        currency.format(bill.amount),
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(width: 12),
-                      StatusBadge(status: bill.status),
-                      const SizedBox(width: 12),
-                      if (!bill.isPaid)
-                        ElevatedButton(
-                          onPressed: () => _payBill(bill),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF10B981),
-                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: AppColors.primary.withAlpha(20),
+                            radius: 18,
+                            child: Text(
+                              bill.flatNumber,
+                              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary),
+                            ),
                           ),
-                          child: const Text('Pay [SIMULATED]'),
-                        )
-                      else if (bill.receiptNumber != null)
-                        OutlinedButton(
-                          onPressed: () => _showReceipt(bill),
-                          child: const Text('Receipt'),
-                        ),
+                          const SizedBox(width: 12),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Flat ${bill.flatNumber} • ${bill.residentName ?? "Resident"}',
+                                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                              ),
+                              Text(
+                                'Due: ${DateFormat('dd MMM yyyy').format(bill.dueDate)} • ${bill.paymentMethod ?? "Unpaid"}',
+                                style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        spacing: 10,
+                        runSpacing: 6,
+                        children: [
+                          Text(
+                            currency.format(bill.amount),
+                            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                          StatusBadge(status: bill.status),
+                          if (!bill.isPaid)
+                            ElevatedButton(
+                              onPressed: () => _payBill(bill),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF10B981),
+                                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                              ),
+                              child: const Text('Pay [SIMULATED]'),
+                            )
+                          else if (bill.receiptNumber != null)
+                            OutlinedButton(
+                              onPressed: () => _showReceipt(bill),
+                              child: const Text('Receipt'),
+                            ),
+                        ],
+                      ),
                     ],
                   ),
                 );

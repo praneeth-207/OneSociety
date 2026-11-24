@@ -132,7 +132,7 @@ class _ShareRentPageState extends ConsumerState<ShareRentPage>
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 380,
-                mainAxisExtent: 220,
+                mainAxisExtent: 260,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
               ),
@@ -254,15 +254,23 @@ class _ShareRentPageState extends ConsumerState<ShareRentPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 12,
+            runSpacing: 6,
             children: [
-              Text(
-                rental.rentalId,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
+              Wrap(
+                spacing: 8,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(
+                    rental.rentalId,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
+                  ),
+                  StatusBadge(status: rental.status),
+                ],
               ),
-              const SizedBox(width: 8),
-              StatusBadge(status: rental.status),
-              const Spacer(),
               Text(
                 'Total: ${currency.format(rental.totalAmount)} (Deposit: ${currency.format(rental.securityDeposit)})',
                 style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
@@ -288,7 +296,9 @@ class _ShareRentPageState extends ConsumerState<ShareRentPage>
           ),
           const SizedBox(height: 16),
           // Actions according to 6-card lifecycle
-          Row(
+          Wrap(
+            spacing: 12,
+            runSpacing: 8,
             children: [
               if (isBorrower) ...[
                 if (rental.status == 'APPROVED')

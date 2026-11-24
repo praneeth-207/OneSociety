@@ -69,8 +69,8 @@ class ResponsiveScaffold extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
         title: Row(
-          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               padding: const EdgeInsets.all(6),
@@ -81,7 +81,7 @@ class ResponsiveScaffold extends ConsumerWidget {
               child: const Icon(Icons.apartment, color: Colors.white, size: 20),
             ),
             const SizedBox(width: 8),
-            Flexible(
+            Expanded(
               child: Text(
                 AppStrings.get('app_name', lang),
                 overflow: TextOverflow.ellipsis,

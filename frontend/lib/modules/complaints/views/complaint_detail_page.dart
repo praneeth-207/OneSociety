@@ -72,11 +72,15 @@ class _ComplaintDetailPageState extends ConsumerState<ComplaintDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${complaint.complaintId}: ${complaint.title}'),
+        title: Text(
+          '${complaint.complaintId}: ${complaint.title}',
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+        ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: StatusBadge(status: complaint.status, isLarge: true),
+            padding: const EdgeInsets.only(right: 12),
+            child: StatusBadge(status: complaint.status),
           ),
         ],
       ),
@@ -225,7 +229,9 @@ class _ComplaintDetailPageState extends ConsumerState<ComplaintDetailPage> {
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 12),
-                        Row(
+                        Wrap(
+                          spacing: 12,
+                          runSpacing: 8,
                           children: [
                             ElevatedButton.icon(
                               icon: const Icon(Icons.check, size: 16),
@@ -240,7 +246,6 @@ class _ComplaintDetailPageState extends ConsumerState<ComplaintDetailPage> {
                                     );
                               },
                             ),
-                            const SizedBox(width: 12),
                             OutlinedButton.icon(
                               icon: const Icon(Icons.request_quote, size: 16),
                               label: const Text('Record Major Expense Quote'),
@@ -364,14 +369,15 @@ class _ComplaintDetailPageState extends ConsumerState<ComplaintDetailPage> {
                           style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
                         ),
                         const SizedBox(height: 16),
-                        Row(
+                        Wrap(
+                          spacing: 12,
+                          runSpacing: 8,
                           children: [
                             ElevatedButton.icon(
                               icon: const Icon(Icons.thumb_up),
                               label: const Text('Yes, Resolved'),
                               onPressed: () => _showRatingDialog(context, complaint),
                             ),
-                            const SizedBox(width: 12),
                             OutlinedButton.icon(
                               icon: const Icon(Icons.replay),
                               label: const Text('Not Resolved (Reopen)'),
@@ -416,8 +422,11 @@ class _ComplaintDetailPageState extends ConsumerState<ComplaintDetailPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                Wrap(
+                                  alignment: WrapAlignment.spaceBetween,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  spacing: 8,
+                                  runSpacing: 4,
                                   children: [
                                     Text(
                                       '${item.actorName} (${item.actorRole})',

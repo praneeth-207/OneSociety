@@ -186,27 +186,29 @@ class _ServiceHubPageState extends ConsumerState<ServiceHubPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
-                radius: 26,
+                radius: 24,
                 backgroundColor: AppColors.primary.withAlpha(20),
                 child: Text(
                   provider.providerName.substring(0, 1),
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primary),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary),
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    Wrap(
+                      spacing: 8,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Text(
                           provider.providerName,
-                          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(width: 8),
                         StatusBadge(status: provider.providerType),
                       ],
                     ),
@@ -229,19 +231,22 @@ class _ServiceHubPageState extends ConsumerState<ServiceHubPage>
                   ],
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    '${currency.format(provider.ratePerSlot)} / slot',
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
-                  ),
-                  const SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: () => _openSlotBookingModal(provider),
-                    child: const Text('Book Time Slot'),
-                  ),
-                ],
+            ],
+          ),
+          const Divider(height: 20),
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 12,
+            runSpacing: 8,
+            children: [
+              Text(
+                '${currency.format(provider.ratePerSlot)} / slot',
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
+              ),
+              ElevatedButton(
+                onPressed: () => _openSlotBookingModal(provider),
+                child: const Text('Book Time Slot'),
               ),
             ],
           ),
@@ -301,15 +306,23 @@ class _ServiceHubPageState extends ConsumerState<ServiceHubPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 12,
+            runSpacing: 6,
             children: [
-              Text(
-                booking.bookingId,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
+              Wrap(
+                spacing: 8,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(
+                    booking.bookingId,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
+                  ),
+                  StatusBadge(status: booking.status),
+                ],
               ),
-              const SizedBox(width: 8),
-              StatusBadge(status: booking.status),
-              const Spacer(),
               Text(
                 'Escrow: ${currency.format(booking.escrowAmount)} [SIMULATED]',
                 style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF10B981)),

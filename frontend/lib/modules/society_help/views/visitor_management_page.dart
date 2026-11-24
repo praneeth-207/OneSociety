@@ -170,13 +170,14 @@ class _VisitorManagementPageState extends ConsumerState<VisitorManagementPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    Wrap(
+                      spacing: 8,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Text(
                           pass.visitorName,
                           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(width: 8),
                         StatusBadge(
                           status: pass.status == 'REVOKED'
                               ? 'REVOKED'
@@ -194,6 +195,7 @@ class _VisitorManagementPageState extends ConsumerState<VisitorManagementPage>
                   ],
                 ),
               ),
+              const SizedBox(width: 8),
               OutlinedButton.icon(
                 onPressed: () => _showQrModal(pass),
                 icon: const Icon(Icons.qr_code_2, size: 18),
@@ -201,14 +203,17 @@ class _VisitorManagementPageState extends ConsumerState<VisitorManagementPage>
               ),
             ],
           ),
-          const Divider(height: 24),
-          Row(
+          const Divider(height: 20),
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 12,
+            runSpacing: 8,
             children: [
               Text(
                 'Valid: ${dateFormat.format(pass.validFrom)} – ${dateFormat.format(pass.validUntil)} (${pass.validityHours}h)',
                 style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
               ),
-              const Spacer(),
               if (pass.status == 'ACTIVE' || pass.status == 'EXPIRED') ...[
                 TextButton.icon(
                   onPressed: () => _renewPass(pass),

@@ -161,41 +161,49 @@ class _GroupBuyingPageState extends ConsumerState<GroupBuyingPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 12,
+            runSpacing: 10,
             children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF59E0B).withAlpha(25),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Icon(Icons.shopping_basket, color: Color(0xFFD97706), size: 24),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          deal.title,
-                          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 8),
-                        StatusBadge(status: deal.status),
-                      ],
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF59E0B).withAlpha(25),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      'Supplier: ${deal.supplierName} • Category: ${deal.category}',
-                      style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
-                    ),
-                  ],
-                ),
+                    child: const Icon(Icons.shopping_basket, color: Color(0xFFD97706), size: 24),
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        spacing: 8,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Text(
+                            deal.title,
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          StatusBadge(status: deal.status),
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Supplier: ${deal.supplierName} • Category: ${deal.category}',
+                        style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     '${currency.format(deal.currentPrice)} / ${deal.unit}',
@@ -215,13 +223,16 @@ class _GroupBuyingPageState extends ConsumerState<GroupBuyingPage>
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 4,
                 children: [
                   Text(
                     'Pledged: ${deal.currentTotalQty} / ${deal.minTargetQty} ${deal.unit}s to activate deal',
                     style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
                   ),
-                  const Spacer(),
                   Text(
                     '${(deal.progressPercentage * 100).toInt()}% Target Met',
                     style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFFD97706)),
@@ -242,11 +253,12 @@ class _GroupBuyingPageState extends ConsumerState<GroupBuyingPage>
           ),
           const SizedBox(height: 16),
           // Tier Badges
-          Row(
+          Wrap(
+            spacing: 8,
+            runSpacing: 6,
             children: deal.tiers.map((t) {
               final isUnlocked = deal.currentTotalQty >= t.minQty;
               return Container(
-                margin: const EdgeInsets.only(right: 8),
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: isUnlocked ? const Color(0xFFD97706).withAlpha(20) : const Color(0xFFF1F5F9),
@@ -267,13 +279,16 @@ class _GroupBuyingPageState extends ConsumerState<GroupBuyingPage>
             }).toList(),
           ),
           const Divider(height: 24),
-          Row(
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 12,
+            runSpacing: 8,
             children: [
               Text(
                 'Deadline: ${DateFormat('dd MMM yyyy').format(deal.deadline)} • Delivery: ${DateFormat('dd MMM yyyy').format(deal.deliveryDate)}',
                 style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
               ),
-              const Spacer(),
               if (isSupplier) ...[
                 if (deal.status == 'TARGET_REACHED' || deal.status == 'OPEN')
                   ElevatedButton.icon(
@@ -399,12 +414,20 @@ class _GroupBuyingPageState extends ConsumerState<GroupBuyingPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    Wrap(
+                      alignment: WrapAlignment.spaceBetween,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 12,
+                      runSpacing: 6,
                       children: [
-                        Text(order.orderId, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                        const SizedBox(width: 8),
-                        StatusBadge(status: order.status),
-                        const Spacer(),
+                        Wrap(
+                          spacing: 8,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Text(order.orderId, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                            StatusBadge(status: order.status),
+                          ],
+                        ),
                         Text(
                           'Pledged: ${currency.format(order.totalPledgedAmount)}',
                           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -424,7 +447,9 @@ class _GroupBuyingPageState extends ConsumerState<GroupBuyingPage>
                     ],
                     if (order.doorDeliveryToken != null && order.status == 'PLEDGED') ...[
                       const SizedBox(height: 12),
-                      Row(
+                      Wrap(
+                        spacing: 12,
+                        runSpacing: 8,
                         children: [
                           OutlinedButton.icon(
                             onPressed: () {
@@ -440,7 +465,6 @@ class _GroupBuyingPageState extends ConsumerState<GroupBuyingPage>
                             icon: const Icon(Icons.qr_code, size: 16),
                             label: Text('Door Token: ${order.doorDeliveryToken}'),
                           ),
-                          const SizedBox(width: 12),
                           ElevatedButton(
                             onPressed: () => ref.read(groupBuyingProvider.notifier).confirmDelivery(order.orderId, order.doorDeliveryToken!),
                             child: const Text('Confirm Received'),

@@ -38,8 +38,8 @@ void main() {
     expect(find.text('Society Supplier'), findsOneWidget);
   });
 
-  testWidgets('Custom Sign-In tab displays credentials form', (WidgetTester tester) async {
-    tester.view.physicalSize = const Size(1200, 900);
+  testWidgets('App renders on compact mobile phone screen (360x640) with zero RenderFlex overflow', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(360, 640);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(() => tester.view.resetPhysicalSize());
 
@@ -50,13 +50,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Tap Custom Sign-In tab
-    final customTab = find.text('Custom Sign-In');
-    expect(customTab, findsOneWidget);
-    await tester.tap(customTab);
+    expect(find.text('OneSociety'), findsWidgets);
+    expect(find.text('Choose Role'), findsOneWidget);
+
+    // Switch to Custom Sign-In tab
+    await tester.tap(find.text('Custom Sign-In'));
     await tester.pumpAndSettle();
 
-    // Verify clean input fields
     expect(find.text('Mobile Number or Email'), findsOneWidget);
     expect(find.text('Sign In'), findsOneWidget);
   });
